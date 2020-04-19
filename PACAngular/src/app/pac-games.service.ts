@@ -13,6 +13,7 @@ import { Observable, of } from 'rxjs';
 export class PACGamesService
 {
   private baseUrl = environment.gameHubApiBaseUrl;
+
   get defaultUserId() { return 0; }
 
   constructor(private http: HttpClient) { }

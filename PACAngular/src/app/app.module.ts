@@ -7,12 +7,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GameHubComponent } from './game-hub/game-hub.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HangmanComponent } from './hangman/hangman.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameHubComponent,
-    NavbarComponent
+    NavbarComponent,
+    HangmanComponent
   ],
   imports: [
     BrowserModule,
