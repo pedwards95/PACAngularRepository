@@ -1,0 +1,31 @@
+<button (click)="getUsers()">Refresh</button>
+<div *ngIf="users.length > 0">
+  <ol>
+    <li *ngFor="let user of users">
+        {{ user.FirstName }}
+        {{ user.LastName }}
+        {{ user.Username }}
+        {{ user.Description }}
+    </li>
+  </ol>
+</div>
+<div *ngIf="users.length === 0">
+  no users found
+</div>
+
+<form [formGroup]="createUserForm" (ngSubmit)="createUser()">
+  <label>
+    User:
+    <input type="text" formControlName="FirstName" required>
+    <input type="text" formControlName="LastName" required>
+    <input type="text" formControlName="Username" required>
+    <input type="text" formControlName="Password" required>
+    <input type="text" formControlName="Description">
+  </label>
+
+  <button type="submit" [disabled]="!createUserForm.valid">Submit</button>
+</form>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>

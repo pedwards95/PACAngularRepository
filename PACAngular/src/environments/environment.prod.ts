@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  notesApiBaseUrl: 'https://2pac-webapp.azurewebsites.net/'
 };
