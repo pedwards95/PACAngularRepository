@@ -11,16 +11,16 @@ import User from '../models/user';
 })
 export class GameHubComponent implements OnInit
 {
-  users: User[] = [];
+  users: User[];
   error: string | undefined;
 
   createUserForm = this.formBuilder.group(
     {
-      FirstName: ['', Validators.required],
-      LastName: ['', Validators.required],
-      Username: ['', Validators.required],
-      Password: ['', Validators.required],
-      Description: ['', Validators.required]
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      description: ['', Validators.required]
     }
   );
   constructor(
@@ -35,17 +35,19 @@ export class GameHubComponent implements OnInit
 
   getUsers()
   {
-    return this.gameHubApi.getUsers()
-      .then(
-        users =>
-        {
-          this.users = users;
-          this.resetError();
-        }, // success
-        error => {
-          this.handleError(error);
-        } // error
-      );
+    this.gameHubApi.getUsers()
+      .subscribe(users => this.users = users);
+    // return this.gameHubApi.getUsers()
+    //   .then(
+    //     users =>
+    //     {
+    //       this.users = users;
+    //       this.resetError();
+    //     }, // success
+    //     error => {
+    //       this.handleError(error);
+    //     } // error
+    //   );
   }
 
   handleError(error: HttpErrorResponse)
@@ -68,14 +70,14 @@ export class GameHubComponent implements OnInit
   createUser()
   {
     const newUser: User = {
-      UserId: this.gameHubApi.defaultUserId,
-      PictureId: 1,
-      FirstName: this.createUserForm.get('FirstName')?.value,
-      LastName: this.createUserForm.get('LastName')?.value,
-      Username: this.createUserForm.get('Username')?.value,
-      Password: this.createUserForm.get('Password')?.value,
-      Description: this.createUserForm.get('Description')?.value,
-      Admin: false
+      userId: this.gameHubApi.defaultUserId,
+      pictureId: 1,
+      firstName: this.createUserForm.get('firstName')?.value,
+      lastName: this.createUserForm.get('lastName')?.value,
+      username: this.createUserForm.get('username')?.value,
+      password: this.createUserForm.get('password')?.value,
+      description: this.createUserForm.get('description')?.value,
+      admin: false
     }
     this.gameHubApi.createUser(newUser)
       .then(
