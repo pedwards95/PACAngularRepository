@@ -1,4 +1,4 @@
-export default interface User
+export class User
 {
     userId : number;
     pictureId : number;
@@ -8,6 +8,7 @@ export default interface User
     password : string;
     description? : string;
     admin : boolean;
+    token : string;
 }
 
 // "userId": 1,

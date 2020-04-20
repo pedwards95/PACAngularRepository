@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { PACGamesService } from '../pac-games.service';
-import User from '../models/user';
+import { first } from 'rxjs/operators';
+
+import { User } from '../models/user';
+import { PACGamesService, AuthenticationService } from '../_services';
 
 @Component({
   selector: 'app-game-hub',
@@ -11,6 +13,7 @@ import User from '../models/user';
 })
 export class GameHubComponent implements OnInit
 {
+  currentUser : User;
   users: User[];
   error: string | undefined;
 
@@ -24,18 +27,24 @@ export class GameHubComponent implements OnInit
     }
   );
   constructor(
+    private authenticationService: AuthenticationService,
+    private PACGamesService: PACGamesService,
     private gameHubApi: PACGamesService,
     private formBuilder: FormBuilder
-  ) { }
+  )
+  {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 
   ngOnInit(): void
   {
-    this.getUsers()
+    this.getAll()
   }
 
-  getUsers()
+  getAll()
   {
-    this.gameHubApi.getUsers()
+    this.PACGamesService.getUsers()
+      .pipe(first())
       .subscribe(users => this.users = users);
     // return this.gameHubApi.getUsers()
     //   .then(
@@ -48,6 +57,12 @@ export class GameHubComponent implements OnInit
     //       this.handleError(error);
     //     } // error
     //   );
+  }
+
+  deleteUser(id: number) {
+    this.PACGamesService.delete(id)
+        .pipe(first())
+        .subscribe(() => this.getAll());
   }
 
   handleError(error: HttpErrorResponse)
@@ -66,31 +81,4 @@ export class GameHubComponent implements OnInit
   {
     this.error = undefined;
   }
-
-  createUser()
-  {
-    const newUser: User = {
-      userId: this.gameHubApi.defaultUserId,
-      pictureId: 1,
-      firstName: this.createUserForm.get('firstName')?.value,
-      lastName: this.createUserForm.get('lastName')?.value,
-      username: this.createUserForm.get('username')?.value,
-      password: this.createUserForm.get('password')?.value,
-      description: this.createUserForm.get('description')?.value,
-      admin: false
-    }
-    this.gameHubApi.createUser(newUser)
-      .then(
-        user => {
-          if (this.error) {
-            this.getUsers();
-          } else {
-            this.users.unshift(user);
-            this.resetError();
-          }
-        },
-        error => this.handleError(error)
-      );
-  }
-
 }

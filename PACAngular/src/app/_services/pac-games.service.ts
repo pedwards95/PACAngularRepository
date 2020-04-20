@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import User from './models/user';
+import { User } from '../models/user';
 import { Observable, of } from 'rxjs';
 
 
@@ -28,7 +28,23 @@ export class PACGamesService
 
   createUser(user: User) {
     return this.http.post<User>(`${this.baseUrl}api/users`, user)
-      .toPromise();
+      .pipe(
+        catchError(this.handleError<User[]>(`createUser`,[]))
+      );;
+  }
+
+  register(user: User) {
+    return this.http.post(`${this.baseUrl}api/users`, user)
+      .pipe(
+        catchError(this.handleError<User[]>(`register`,[]))
+      );
+  }
+
+  delete(id: number) {
+      return this.http.delete(`${this.baseUrl}api/users/${id}`)
+        .pipe(
+          catchError(this.handleError<User[]>(`delete`,[]))
+        );;
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
