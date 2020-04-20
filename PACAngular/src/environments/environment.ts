@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  gameHubApiBaseUrl: 'https://localhost:44392/',
-  //gameHubApiBaseUrl: 'https://2pacwebapp.azurewebsites.net/'
+  //gameHubApiBaseUrl: 'https://localhost:44392/',
+  gameHubApiBaseUrl: 'https://2pacwebapp.azurewebsites.net/'
 };
 
 /*
