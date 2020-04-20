@@ -1,3 +1,4 @@
+<!---
 <button (click)="getUsers()">Refresh</button>
 <div *ngIf="users">
   <ol>
@@ -26,3 +27,14 @@
 <div *ngIf="error" class="error">
   {{ error }}
 </div>
+--->
+
+<h1>Hi {{currentUser.firstName}}!</h1>
+<br/>
+<h3>All registered users:</h3>
+<ul>
+    <li *ngFor="let user of users">
+        {{user.username}} ({{user.firstName}} {{user.lastName}})
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+</ul>
