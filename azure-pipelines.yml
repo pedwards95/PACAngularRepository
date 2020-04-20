@@ -1,0 +1,114 @@
+trigger:
+- master
+
+pr:
+- master
+
+stages:
+
+- stage: build
+
+  variables:
+    nodeVersion: 13.x
+    appDir: PACAngular
+
+  jobs:
+
+  - job: build
+
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: $(nodeVersion)
+      displayName: node $(nodeVersion)
+
+    - script: npm ci
+      workingDirectory: $(appDir)
+      displayName: npm install
+
+    - script: npx ng build --outputPath $(Build.ArtifactStagingDirectory)/app --prod
+      workingDirectory: $(appDir)
+      displayName: ng build
+
+    - publish: $(Build.ArtifactStagingDirectory)/app
+      artifact: app
+      displayName: artifact publish app
+
+  - job: test
+
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: $(nodeVersion)
+      displayName: node $(nodeVersion)
+
+    - script: npm ci
+      workingDirectory: $(appDir)
+      displayName: npm install
+
+    - task: SonarCloudPrepare@1
+      inputs:
+        SonarCloud: 'PACAngular_Github'
+        organization: 'project2pac'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'pedwards95_PACAngularRepository'
+        cliProjectName: 'PAC-Angular-Project2'
+        cliSources: '$(appDir)/src'
+        extraProperties: |
+          sonar.coverage.exclusions=**/*.spec.ts
+          sonar.typescript.lcov.reportPaths=$(appDir)/coverage/$(appDir)/lcov.info
+      displayName: sonarcloud analysis prepare
+
+    - script: npx ng test --browsers ChromeHeadless --no-watch --code-coverage
+      workingDirectory: $(appDir)
+      continueOnError: true
+      displayName: ng test
+
+    - script: npm run lint
+      workingDirectory: $(appDir)
+      continueOnError: true
+      displayName: ng lint
+
+    - task: SonarCloudAnalyze@1
+      displayName: sonarcloud analysis run
+
+    - task: SonarCloudPublish@1
+      displayName: sonarcloud results build publish
+
+- stage: deploy
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn: build
+
+  jobs:
+
+  - deployment: deploy_dev
+
+    pool:
+      vmImage: ubuntu-latest
+
+    environment: dev
+
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - download: current
+            artifact: app
+            displayName: artifact download app
+
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: 'AzureRM'
+              azureSubscription: 'Azure subscription (Pay As You Go (Hopefully)(0898d619-ccf0-4843-99d4-f17ed331e0f4)'
+              appType: 'webApp'
+              WebAppName: 'PAC-ClientWebApp'
+              packageForLinux: '$(Pipeline.Workspace)/app'
+            displayName: azure app service deploy
