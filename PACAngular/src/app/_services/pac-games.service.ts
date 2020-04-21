@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import { User } from '../models/user';
+import { User, Game } from '../models';
 import { Observable, of } from 'rxjs';
 
 
@@ -23,6 +23,14 @@ export class PACGamesService
     return this.http.get<User[]>(`${this.baseUrl}api/users`)
       .pipe(
         catchError(this.handleError<User[]>(`getUsers`,[]))
+      );
+  }
+
+  getGames() : Observable<Game[]>
+  {
+    return this.http.get<Game[]>(`${this.baseUrl}api/games`)
+      .pipe(
+        catchError(this.handleError<Game[]>(`getGames`,[]))
       );
   }
 

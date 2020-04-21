@@ -1,1 +1,34 @@
-<p>games-overview works!</p>
+<button (click)="getAll()">Refresh</button>
+<div *ngIf="games">
+  <ol>
+    <ul *ngFor="let game of games">
+        <h3>{{game.GameName}}</h3>
+        <br/>
+        {{game.GameDescription}}
+        <br/>
+        High Score: <div>{{game.HighScore}}</div>
+        <br/>
+        <a class="nav-item nav-link" [routerLink]="['/', this.gameChoice[game.GameId-1]]">Play</a>
+    </ul>
+  </ol>
+</div>
+
+<!--
+<form [formGroup]="createUserForm" (ngSubmit)="createUser()">
+  <label>
+    User:
+    <input type="text" formControlName="firstName" required>
+    <input type="text" formControlName="lastName" required>
+    <input type="text" formControlName="username" required>
+    <input type="text" formControlName="password" required>
+    <input type="text" formControlName="description">
+  </label>
+
+  <button type="submit" [disabled]="!createUserForm.valid">Submit</button>
+</form>
+
+<div *ngIf="error" class="error">
+  {{ error }}
+</div>
+-->
+
