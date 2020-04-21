@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 import { GameHubComponent } from './game-hub/game-hub.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { HangmanComponent } from './hangman/hangman.component';
 import { AuthGuard } from './authentification';
 
 const routes: Routes = [
   { path: '', component: GameHubComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'hangman', component: HangmanComponent},
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
