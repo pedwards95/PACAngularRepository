@@ -38,30 +38,80 @@ export class HangmanComponent implements OnInit {
   //get question and answer as a row from gamedata randomly
   getQA(){
     this.gameHubApi.getQA()
-      .subscribe(answer => this.gamedata[this.rand].Answer = answer[this.rand].Answer,
-                  question => this.gamedata[this.rand].Question = question[this.rand].Question);
+      .subscribe(gamedata => this.gamedata = gamedata);
   }
 
-  //compare user input answer to answer matching drawn question
-  checkMatch(){
-    //get answer from user input in html
-    var userAnswer = document.getElementById('answer').innerHTML;
-    //compare user input to answer of question randomly
-    if(userAnswer == this.gamedata[this.rand].Answer){
-      return true;
-    }
-    else{
-      return false;
-    }
-  }
+  //create counting integer for replacing images and ending game
+  hangCount = 0;
+  //get caption element to change
+  caption = document.getElementById('hangmancaption');
 
   //set html of result element depending on result of checkmatch function when html button is pushed
   showResult(){
-    if (!this.checkMatch){
-      document.getElementById('result').innerHTML = "Wrong, add to hangman.";
+    //get answer from user input in html
+    //setting it specifically as htmlinputelement and grabbing value instead of innerhtml fixed the issue
+    var userAnswer = (document.getElementById('answer') as HTMLInputElement).value;
+    //compare user input answer to answer matching drawn question
+    if(userAnswer == this.gamedata[this.rand].Answer){
+      document.getElementById('result').innerHTML = "Correct, you win!";
+      // disable buttons upon win
+      this.disableButtons();
     }
     else{
-      document.getElementById('result').innerHTML = "Correct!";
+      //add to count when user is wrong
+      this.hangCount++;
+      console.log(this.hangCount);
+      document.getElementById('result').innerHTML = "Wrong, add to hangman.";
+
+      //get img to swap hangman pics & caption upon count (after getting img as htmlimageelement)
+      (document.getElementById('hangmanpic') as HTMLImageElement).src = "../../assets/hangmanpics/hangman"+this.hangCount+".png";
+      
+      var caption = document.getElementById('hangmancaption');
+      //iterate through hangman caption cases
+      switch(this.hangCount){
+        case 0:
+          caption.innerHTML = "Let's begin.";
+          break;
+        case 1:
+          caption.innerHTML = "Heads up.";
+          break;
+        case 2:
+          caption.innerHTML = "I've got your back.";
+          break;
+        case 3:
+          caption.innerHTML = "Break a leg.";
+          break;
+        case 4:
+          caption.innerHTML = "Now I'm getting nervous.";
+          break;
+        case 5:
+          caption.innerHTML = "Last chance.";
+          break;
+        case 6:
+          caption.innerHTML = "Game over.";
+          break;
+      }
+
+      //if user has gone through all six attempts, then disable buttons
+      if(this.hangCount == 6){
+        this.disableButtons();
+      }
     }
+  }
+
+  //new game function (need to add button)
+  //should re-enable check and new question buttons, and set count back to 0, and blank out result field
+  newGame(){
+    this.hangCount = 0;
+    (document.getElementById('hangmanpic') as HTMLImageElement).src = "../../assets/hangmanpics/hangman"+this.hangCount+".png";
+    document.getElementById('result').innerHTML = "";
+    (document.getElementById("resultbutton") as HTMLButtonElement).disabled = false;
+    (document.getElementById("newqbutton") as HTMLButtonElement).disabled = false;
+  }
+
+  //function called to disable result and question buttons
+  disableButtons(){
+    (document.getElementById("resultbutton") as HTMLButtonElement).disabled = true;
+    (document.getElementById("newqbutton") as HTMLButtonElement).disabled = true;
   }
 }

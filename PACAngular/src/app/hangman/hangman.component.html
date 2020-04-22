@@ -1,3 +1,8 @@
+<h2>Welcome to Hangman!</h2>
+<figure>
+  <img src="../../assets/hangmanpics/hangman0.png" id="hangmanpic" alt="hangman" style="width:40%">
+  <figcaption id="hangmancaption">Let's get started.</figcaption>
+</figure>
 <div>
     <div><span>Question: </span>{{gamedata[rand].Question}}</div>
     <div>
@@ -5,9 +10,11 @@
         <input type="text" id="answer" placeholder="Answer"/>
       </label>
     </div>
-    <button (click)="checkMatch()">Check</button>
+    <button (click)="showResult()" id="resultbutton">Check</button>
     <br/>
-    <button (click)="getRand()">New Question</button>
+    <button (click)="getRand()" id="newqbutton">New Question</button>
     <br/>
     <p id="result"></p>
+    <button (click)="newGame()" id="newgbutton">New Game</button>
+    <br/>
 </div>
