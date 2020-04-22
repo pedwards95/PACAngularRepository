@@ -104,6 +104,7 @@ export class HangmanComponent implements OnInit {
   newGame(){
     this.hangCount = 0;
     (document.getElementById('hangmanpic') as HTMLImageElement).src = "../../assets/hangmanpics/hangman"+this.hangCount+".png";
+    document.getElementById('hangmancaption').innerHTML = "Let's begin.";
     document.getElementById('result').innerHTML = "";
     (document.getElementById("resultbutton") as HTMLButtonElement).disabled = false;
     (document.getElementById("newqbutton") as HTMLButtonElement).disabled = false;
