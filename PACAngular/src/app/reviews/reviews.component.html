@@ -1,1 +1,25 @@
-<p>reviews works!</p>
+<ul class = "heroes">
+    <ul class="heroes">
+        <li *ngFor="let review of game.Reviews">
+            <a routerLink="/reviewdetail/{{review.ReviewId}}">
+                <span class="badge">{{review.id}}</span> {{review.Username}} {{review.Rating}}
+            </a>
+            <button class="delete" title="delete review" (click)="delete(review)">x</button>
+        </li>
+    </ul>
+</ul>
+
+<div>
+<label>Add Review:
+    <label>
+        <input #reviewRating />
+    </label>
+    <label>
+        <input #reviewBody />
+    </label>
+</label>
+<!-- (click) passes input value to add() and then clears the input -->
+<button (click)="add(reviewRating.value,reviewBody.value); reviewRating.value=''; reviewBody.value=''">
+  Add Review
+</button>
+</div>

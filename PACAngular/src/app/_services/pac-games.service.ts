@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import { User, Game } from '../models';
+import { User, Game, Review } from '../models';
 import { Observable, of } from 'rxjs';
 
 
@@ -31,6 +31,37 @@ export class PACGamesService
     return this.http.get<Game[]>(`${this.baseUrl}api/games`)
       .pipe(
         catchError(this.handleError<Game[]>(`getGames`,[]))
+      );
+  }
+
+  getReview(id : number) : Observable<Review>
+  {
+    return this.http.get<Review>(`${this.baseUrl}api/reviews/${id}`)
+      .pipe(
+        catchError(this.handleError<Review>(`getReview`))
+      );
+  }
+
+  addReview(userId: number, username: string, gameId: number, gameName: string, rating: number, reviewBody: string) : Observable<Review>
+  {
+    let review: Review;
+    review.UserId = userId;
+    review.Username = username;
+    review.GameId = gameId;
+    review.GameName = gameName;
+    review.Rating = rating;
+    review.ReviewBody = reviewBody;
+    return this.http.post<Review>(`${this.baseUrl}api/reviews/`, review)
+      .pipe(
+        catchError(this.handleError<Review>(`getReview`))
+      );
+  }
+
+  deleteReview(review : Review) : Observable<Review>
+  {
+    return this.http.get<Review>(`${this.baseUrl}api/reviews/${review.ReviewId}`)
+      .pipe(
+        catchError(this.handleError<Review>(`deleteReview`,review))
       );
   }
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PACGamesService,DataHolder} from '../_services';
+import { PACGamesService} from '../_services';
 import { first } from 'rxjs/operators';
 import { Game } from '../models';
 
@@ -13,11 +13,11 @@ export class GamesOverviewComponent implements OnInit
 {
   gameChoice : string[];
   games: Game[];
+  selectedGame : Game;
   error: string | undefined;
   highScore : number = 0;
   constructor(
     private PACGamesService: PACGamesService,
-    private myGames: DataHolder
   )
   {
     this.games = [];
@@ -38,10 +38,11 @@ export class GamesOverviewComponent implements OnInit
       .subscribe(games =>
         {
           this.games = games;
-          for(let i:number = 0; i<this.games.length;i++)
-          {
-            this.gameChoice.push(this.games[i].GameName);
-          }
+          this.getChoices(games);
+          // for(let i:number = 0; i<this.games.length;i++)
+          // {
+          //   this.gameChoice.push(this.games[i].GameName);
+          // }
         });
   }
 
@@ -49,8 +50,12 @@ export class GamesOverviewComponent implements OnInit
   {
     for(let i:number = 0; i<this.games.length;i++)
     {
-      this.gameChoice.push(this.games[i].GameName);
+      this.gameChoice.push(game[i].GameName);
     }
+  }
+
+  onSelect(selectedGame: Game): void {
+    this.selectedGame = selectedGame;
   }
 
   handleError(error: HttpErrorResponse)

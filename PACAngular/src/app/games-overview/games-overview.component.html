@@ -1,14 +1,15 @@
 <button (click)="getAll()">Refresh</button>
 <div *ngIf="games">
   <ol>
-    <ul *ngFor="let game of games">
+    <ul *ngFor="let game of games" [class.selected]="game === selectedGame" (click)="onSelect(game)">
         <h3>{{game.GameName}}</h3>
         <br/>
         {{game.GameDescription}}
         <br/>
-        High Score: <div>{{game.HighScore}}</div>
+        High Score: <span>{{game.HighScore}}</span>
         <br/>
         <a class="nav-item nav-link" [routerLink]="['/', this.gameChoice[game.GameId-1]]">Play</a>
+        <app-reviews [game]="selectedGame">Reviews</app-reviews>
     </ul>
   </ol>
 </div>
