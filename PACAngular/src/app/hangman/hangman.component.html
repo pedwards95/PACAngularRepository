@@ -1,1 +1,13 @@
-<p>hangman works!</p>
+<div>
+    <div><span>Question: </span>{{gamedata[rand].Question}}</div>
+    <div>
+      <label>Answer:
+        <input type="text" id="answer" placeholder="Answer"/>
+      </label>
+    </div>
+    <button (click)="checkMatch()">Check</button>
+    <br/>
+    <button (click)="getRand()">New Question</button>
+    <br/>
+    <p id="result"></p>
+</div>
