@@ -41,6 +41,16 @@ export class HangmanComponent implements OnInit {
       .subscribe(gamedata => this.gamedata = gamedata);
   }
 
+  //add enter listener for enter input (need query selector for htmlelement specifically, as opposed to htmlinputelement, which addeventlistener can't use)
+  // answer = document.querySelector('.answer');
+  // answer.addEventListener('keyup', function(e) {
+  //   // keyCode 13 is enter/return
+  //   if (e.keyCode === 13) {
+  //       // upon enter, validate function called
+  //       this.validate();
+  //   }
+  // });
+  
   //function to validate user input
   validate(){
     //validation checks that userinput is a string with only letters and at least one character

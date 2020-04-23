@@ -2,3 +2,7 @@
 a {
     cursor: pointer;
 }
+/* consistent background color */
+html{
+    background-color: #CCE6F4;
+}

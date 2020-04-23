@@ -1,0 +1,33 @@
+/* heading styles */
+h2 {
+    background-color: #CCE6F4;
+    color: #175676;
+    text-align: center;
+    text-shadow: 2px 2px 5px #4BA3C3;
+}
+/* image and caption styles */
+figure{
+    background-color: #CCE6F4;
+    margin: auto;
+    width: 50%;
+    border: 3px solid #4BA3C3;
+    padding: 10px;
+}
+/* div styles */
+div{
+    background-color: #CCE6F4;
+}
+/* buttons styles */
+button{
+    margin: 4px 2px;
+    padding: 10px 20px;
+    text-align: center;
+    background-color: #4BA3C3;
+}
+button:hover{
+    background-color: #175676;
+}
+/* p (result) styles */
+p{
+    color: #BA324F;
+}
