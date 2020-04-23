@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userService: PACGamesService,
+        private PACGamesService: PACGamesService,
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        this.PACGamesService.register(this.registerForm.value)
             .pipe(first())
             .subscribe(
                 data => {
