@@ -7,11 +7,10 @@
     <div><span>Question: </span>{{gamedata[rand].Question}}</div>
     <div>
       <label>Answer:
-        <input type="text" id="answer" placeholder="Answer"/>
+        <input type="text" id="answer" placeholder="Answer" required/>
       </label>
     </div>
-    <button (click)="showResult()" id="resultbutton">Check</button>
-    <br/>
+    <button (click)="validate()" id="resultbutton">Check</button>
     <button (click)="getRand()" id="newqbutton">New Question</button>
     <br/>
     <p id="result"></p>

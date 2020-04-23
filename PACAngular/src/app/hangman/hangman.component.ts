@@ -41,6 +41,21 @@ export class HangmanComponent implements OnInit {
       .subscribe(gamedata => this.gamedata = gamedata);
   }
 
+  //function to validate user input
+  validate(){
+    //validation checks that userinput is a string with only letters and at least one character
+    var reg =/^[0-9\!\@\#\$\%\^\*\_\|\<\>\{\}]+/;
+    var guess = (document.getElementById('answer') as HTMLInputElement).value;
+    //if input contains invalid num/symbol, will not run hangman
+    if(reg.test(guess)){              
+      document.getElementById('result').innerHTML = "No numbers or symbols, please.";
+    }
+    else{
+      //calls showresult only upon valid input
+      this.showResult();
+    }
+  }
+
   //create counting integer for replacing images and ending game
   hangCount = 0;
   //get caption element to change
@@ -48,6 +63,8 @@ export class HangmanComponent implements OnInit {
 
   //set html of result element depending on result of checkmatch function when html button is pushed
   showResult(){
+    //call validate function to ensure proper user input
+    // this.validate();
     //get answer from user input in html
     //setting it specifically as htmlinputelement and grabbing value instead of innerhtml fixed the issue
     var userAnswer = (document.getElementById('answer') as HTMLInputElement).value;
@@ -101,11 +118,15 @@ export class HangmanComponent implements OnInit {
 
   //new game function (need to add button)
   //should re-enable check and new question buttons, and set count back to 0, and blank out result field
+  //get new random number for question, empty input field
   newGame(){
     this.hangCount = 0;
+    this.getRand();
     (document.getElementById('hangmanpic') as HTMLImageElement).src = "../../assets/hangmanpics/hangman"+this.hangCount+".png";
     document.getElementById('hangmancaption').innerHTML = "Let's begin.";
+    (document.getElementById('answer') as HTMLInputElement).value = "";
     document.getElementById('result').innerHTML = "";
+    (document.getElementById('answer') as HTMLInputElement).disabled = false;
     (document.getElementById("resultbutton") as HTMLButtonElement).disabled = false;
     (document.getElementById("newqbutton") as HTMLButtonElement).disabled = false;
   }
@@ -114,5 +135,6 @@ export class HangmanComponent implements OnInit {
   disableButtons(){
     (document.getElementById("resultbutton") as HTMLButtonElement).disabled = true;
     (document.getElementById("newqbutton") as HTMLButtonElement).disabled = true;
+    (document.getElementById('answer') as HTMLInputElement).disabled = true;
   }
 }
