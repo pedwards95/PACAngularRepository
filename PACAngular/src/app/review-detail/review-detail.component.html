@@ -1,15 +1,38 @@
-<div *ngIf="game">
-
-    <h3>Reviews</h3>
-    <div>
-      <ul *ngFor="let review of game.Reviews">
-        <h4>{{review.Username}}</h4>
-        {{review.GameName}}
+<div *ngIf="review != null && invaliduser==0">
+  <h3>Review</h3>
+  <div>
+      <h4>{{review.Username}}'s Review</h4>
+      <h5>{{review.GameName}}</h5>
+      <br/>
+      <div>
+        <label>Rating:
+          <input [(ngModel)]="review.Rating" placeholder="Rating"/>
+        </label>
         <br/>
-        {{review.Rating}}
-        <br/>
-        {{review.ReviewBody}}
-      </ul>
-    </div>
-
+        <label>Review:
+          <input [(ngModel)]="review.ReviewBody" placeholder="ReviewBody"/>
+        </label>
+      </div>
   </div>
+  <button (click)="save()">save</button>
+  <button (click)="goBack()">Go Back</button>
+</div>
+
+<div *ngIf="review != null && invaliduser==1">
+  <h3>Review</h3>
+  <div>
+      <h4>{{review.Username}}'s Review</h4>
+      <h5>{{review.GameName}}</h5>
+      <br/>
+      <div>
+        <label>Rating:
+          <div>{{review.Rating}} </div>
+        </label>
+        <br/>
+        <label>Review:
+          <div>{{review.ReviewBody}} </div>
+        </label>
+      </div>
+  </div>
+  <button (click)="goBack()">Go Back</button>
+</div>

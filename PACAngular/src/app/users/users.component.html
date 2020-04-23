@@ -3,7 +3,7 @@
   <ol>
     <li *ngFor="let user of users">
         {{user.username}} ({{user.firstName}} {{user.lastName}})
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+        <a class="nav-item nav-link" routerLink="profile/{{user.userId}}">View Profile </a>
     </li>
   </ol>
 </div>

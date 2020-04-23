@@ -31,6 +31,21 @@ export class PACGamesService
       );
   }
 
+  getUser(id : number) : Observable<User>
+  {
+    return this.http.get<User>(`${this.baseUrl}api/users/${id}`)
+      .pipe(
+        catchError(this.handleError<User>(`getUser`))
+      );
+  }
+
+  updateUser(user: User): Observable<any>
+  {
+    return this.http.put(`${this.baseUrl}api/users${user.UserId}`, user, this.httpOptions).pipe(
+      catchError(this.handleError<Review>('updateUser'))
+    );
+  }
+
   getGames() : Observable<Game[]>
   {
     return this.http.get<Game[]>(`${this.baseUrl}api/games`)
@@ -53,6 +68,13 @@ export class PACGamesService
       .pipe(
         catchError(this.handleError<Review[]>(`getReviews`))
       );
+  }
+
+  updateReview(review: Review): Observable<any>
+  {
+    return this.http.put(`${this.baseUrl}api/reviews/${review.ReviewId}`, review, this.httpOptions).pipe(
+      catchError(this.handleError<Review>('updateReview'))
+    );
   }
 
   addReview(review) : Observable<Review>

@@ -11,13 +11,13 @@ import { last } from 'rxjs/operators';
 export class ReviewsComponent implements OnInit {
 
   @Input() game: Game;
-  currentUser : User;
+  currentUser : any;
   review : Review;
   myReviews : Review[];
   createdMessage : string;
   highest: number;
 
-  constructor(private PACGamesService: PACGamesService,private authenticationService: AuthenticationService) { this.currentUser = this.authenticationService.currentUserValue;}
+  constructor(private PACGamesService: PACGamesService,private authenticationService: AuthenticationService) { this.currentUser = this.authenticationService.CurrentUserValue;}
 
   ngOnInit(): void {
     this.getHighestReviewId();
@@ -60,6 +60,7 @@ export class ReviewsComponent implements OnInit {
       .subscribe(reviews => {
         this.myReviews = reviews,
         this.highest = this.myReviews[this.myReviews.length-1].ReviewId;
+        console.log(this.highest);
       });
   }
 }

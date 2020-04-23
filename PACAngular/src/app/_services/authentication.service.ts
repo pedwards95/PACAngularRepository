@@ -8,32 +8,32 @@ import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+    private CurrentUserSubject: BehaviorSubject<User>;
+    public CurrentUser: Observable<User>;
     private baseUrl = environment.gameHubApiBaseUrl;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.CurrentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('CurrentUser')));
+        this.CurrentUser = this.CurrentUserSubject.asObservable();
     }
 
-    public get currentUserValue(): User {
-        return this.currentUserSubject.value;
+    public get CurrentUserValue(): User {
+        return this.CurrentUserSubject.value;
     }
 
     login(username, password) {
         return this.http.post<any>(`${this.baseUrl}api/users/authenticate`, { username, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
+                localStorage.setItem('CurrentUser', JSON.stringify(user));
+                this.CurrentUserSubject.next(user);
                 return user;
             }));
     }
 
     logout() {
         // remove user from local storage and set current user to null
-        localStorage.removeItem('currentUser');
-        this.currentUserSubject.next(null);
+        localStorage.removeItem('CurrentUser');
+        this.CurrentUserSubject.next(null);
     }
 }

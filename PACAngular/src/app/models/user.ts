@@ -1,13 +1,13 @@
 export class User
 {
-    userId : number;
-    pictureId : number;
-    firstName : string;
-    lastName : string;
-    username :string;
-    password : string;
-    description? : string;
-    admin : boolean;
+    UserId : number;
+    PictureId : number;
+    FirstName : string;
+    LastName : string;
+    Username :string;
+    Password : string;
+    Description? : string;
+    Admin : boolean;
     token : string;
 }
 
