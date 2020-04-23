@@ -2,17 +2,20 @@
     <ul class = "reviews">
         <ul class="reviews" style='list-style-type:none;'>
             <li *ngFor="let review of game.Reviews">
-                <button routerLink="/reviewdetail/{{review.ReviewId}}">
-                    <div>User: {{review.Username}}</div>
-                    <span>Rating: {{review.Rating}}</span>
-                </button>
-                <button class="delete" title="delete review" (click)="delete(review)">delete</button>
+                <div *ngIf="review.ReviewId">
+                    <button routerLink="/reviewdetail/{{review.ReviewId}}">
+                        <div>User: {{review.Username}}</div>
+                        <span>Rating: {{review.Rating}}</span>
+                    </button>
+                    <button class="delete" title="delete review" (click)="delete(review)">delete</button>
+                </div>
             </li>
         </ul>
     </ul>
 
     <br/>
     <br/>
+    <div *ngIf = "this.createdMessage">{{this.createdMessage}}</div>
     <div>
     <label>Add Review:
         <br/>
@@ -25,7 +28,7 @@
             </label>
         </div>
     </label>
-    <button (click)="add(reviewRating.value,reviewBody.value); reviewRating.value=0; reviewBody.value=''">
+    <button (click)="add(reviewRating.value,reviewBody.value); reviewRating.value=0; reviewBody.value=''" [routerLink]="''">
         Add Review
     </button>
     </div>
