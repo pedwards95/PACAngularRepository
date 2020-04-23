@@ -1,1 +1,29 @@
-<p>notices works!</p>
+<div class="container-fluid" style="background:rgb(115, 161, 247); border-style:solid;">
+    <div class="row-fluid">
+        <h4>Chat</h4>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <div *ngIf = "notices">
+                    <div *ngFor= "let notice of notices">
+                        <tr>
+                            <td colspan="1">{{notice.Description}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1">{{notice.Time}}</td>
+                        </tr>
+                    </div>
+                </div>
+            </tbody>
+        </table>
+    </div>
+    <div class="row-fluid">
+        <form [formGroup]="messageForm" (ngSubmit)="save()" [routerLink]="''">
+            <input type="text" name="message" placeholder="Message" formControlName="Description"/>
+            <button type="submit" class="btn btn-primary" [disabled]="loading">SEND</button>
+        </form>
+    </div>
+</div>

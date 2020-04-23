@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
-import { User, Game, Review } from '../models';
+import { User, Game, Review, Notice } from '../models';
 import { Observable, of } from 'rxjs';
 
 
@@ -79,16 +79,6 @@ export class PACGamesService
 
   addReview(review) : Observable<Review>
   {
-    // let review = new Review
-    // {
-    //   review.ReviewId = 0,
-    //   review.UserId = UserId,
-    //   review.Username = Username,
-    //   review.GameId = GameId,
-    //   review.GameName = GameName,
-    //   review.Rating = Rating,
-    //   review.ReviewBody = ReviewBody
-    // }
     return this.http.post<Review>(`${this.baseUrl}api/reviews`, review, this.httpOptions)
       .pipe(
         catchError(this.handleError<Review>(`addReview`))
@@ -122,6 +112,22 @@ export class PACGamesService
         .pipe(
           catchError(this.handleError<User[]>(`delete`,[]))
         );;
+  }
+
+  getNotices() : Observable<Notice[]>
+  {
+    return this.http.get<Notice[]>(`${this.baseUrl}api/notices`)
+      .pipe(
+        catchError(this.handleError<Notice[]>(`getNotices`))
+      );
+  }
+
+  addNotice(notice) : Observable<Notice>
+  {
+    return this.http.post<Notice>(`${this.baseUrl}api/notices`, notice, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<Notice>(`addNotice`))
+      );
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
