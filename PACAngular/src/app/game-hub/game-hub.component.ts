@@ -9,10 +9,10 @@ import { AuthenticationService } from '../_services';
 })
 export class GameHubComponent implements OnInit
 {
-  currentUser : User;
+  currentUser : any;
   constructor(
     private authenticationService: AuthenticationService
-  ){this.currentUser = this.authenticationService.currentUserValue;}
+  ){this.currentUser = this.authenticationService.CurrentUserValue;}
 
   ngOnInit(): void
   {

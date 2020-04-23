@@ -1,1 +1,53 @@
-<p>user-detail works!</p>
+<div *ngIf="user != null && invaliduser == 0">
+    <h3>Your Profile</h3>
+    <div>
+          <label>First:
+            <input [(ngModel)]="user.FirstName" placeholder="FirstName"/>
+          </label>
+          <br/>
+          <label>Last:
+            <input [(ngModel)]="user.LastName" placeholder="LastName"/>
+          </label>
+          <br/>
+          <label>Username:
+            <input [(ngModel)]="user.Username" placeholder="Username"/>
+          </label>
+          <br/>
+          <label>About You:
+            <input [(ngModel)]="user.Description" placeholder="Description"/>
+          </label>
+          <br/>
+          <label>Admin:
+            <div>{{user.Admin}}</div>
+          </label>
+        </div>
+    <button (click)="save()">save</button>
+    <button (click)="goBack()">Go Back</button>
+</div>
+
+<div *ngIf="user != null && invaliduser == 1">
+    <h3>{{user.Username}}'s Profile</h3>
+    <div>
+        <br/>
+          <label>First:
+            <span>{{user.FirstName}}</span>
+          </label>
+          <br/>
+          <label>Last:
+            <span>{{user.LastName}}</span>
+          </label>
+          <br/>
+          <label>Username:
+            <span>{{user.Username}}</span>
+          </label>
+          <br/>
+          <label>About Them:
+            <span>{{user.Description}}</span>
+          </label>
+          <br/>
+          <label>Admin:
+            <span>{{user.Admin}}</span>
+          </label>
+        </div>
+    <button (click)="goBack()">Go Back</button>
+</div>

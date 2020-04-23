@@ -20,11 +20,11 @@ export class UsersComponent implements OnInit
 
   createUserForm = this.formBuilder.group(
     {
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      description: ['', Validators.required]
+      FirstName: ['', Validators.required],
+      LastName: ['', Validators.required],
+      Username: ['', Validators.required],
+      Password: ['', Validators.required],
+      Description: ['', Validators.required]
     });
 
   constructor(
@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit
     private formBuilder: FormBuilder
   )
   {
-    this.currentUser = this.authenticationService.currentUserValue;
+    this.currentUser = this.authenticationService.CurrentUserValue;
   }
 
   ngOnInit(): void
@@ -44,8 +44,8 @@ export class UsersComponent implements OnInit
   getAll()
   {
     this.PACGamesService.getUsers()
-      .pipe(first())
-      .subscribe(users => this.users = users);
+      //.pipe(first())
+      .subscribe(users => {this.users = users, console.log(this.users)});
   }
 
   deleteUser(id: number) {
