@@ -60,7 +60,6 @@ export class ReviewsComponent implements OnInit {
       .subscribe(reviews => {
         this.myReviews = reviews,
         this.highest = this.myReviews[this.myReviews.length-1].ReviewId;
-        console.log(this.highest);
       });
   }
 }

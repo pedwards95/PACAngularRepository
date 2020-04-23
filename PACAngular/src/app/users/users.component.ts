@@ -45,7 +45,7 @@ export class UsersComponent implements OnInit
   {
     this.PACGamesService.getUsers()
       //.pipe(first())
-      .subscribe(users => {this.users = users, console.log(this.users)});
+      .subscribe(users => {this.users = users});
   }
 
   deleteUser(id: number) {
