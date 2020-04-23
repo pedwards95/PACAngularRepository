@@ -1,6 +1,6 @@
 export class Review
 {
-    ReviewId :number
+    ReviewId : number
     UserId : number
     Username : string
     GameId : number

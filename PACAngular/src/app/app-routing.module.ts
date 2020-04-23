@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: '', component: GameHubComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'hangman', component: HangmanComponent},
+  { path: 'Hangman', component: HangmanComponent},
   { path: 'reviewdetail/:id', component: ReviewDetailComponent },
 
   // otherwise redirect to home

@@ -11,6 +11,7 @@ export class ReviewsComponent implements OnInit {
 
   @Input() game: Game;
   currentUser : User;
+  review : Review;
 
   constructor(private PACGamesService: PACGamesService,private authenticationService: AuthenticationService) { this.currentUser = this.authenticationService.currentUserValue;}
 
@@ -19,16 +20,27 @@ export class ReviewsComponent implements OnInit {
 
   add(reviewRating: number, reviewBody: string): void {
     reviewBody = reviewBody.trim();
-    if (!reviewBody) { return; }
-    this.PACGamesService.addReview(this.currentUser.userId,this.currentUser.username,this.game.GameId,this.game.GameName,reviewRating,reviewBody)
+    reviewRating = +reviewRating;
+    if (!reviewRating) { return; }
+    // let review = new Review
+    // {
+    //   review.reviewId = 0,
+    //   review.userId = this.currentUser.userId,
+    //   review.username = this.currentUser.username,
+    //   review.gameId = this.game.GameId,
+    //   review.gameName = this.game.GameName,
+    //   review.rating = reviewRating,
+    //   review.reviewBody = reviewBody
+    // }
+    console.log (typeof(reviewRating));
+    this.PACGamesService.addReview(this.currentUser.userId, this.currentUser.username, this.game.GameId, this.game.GameName, reviewRating, reviewBody)
       .subscribe(review => {
         this.game.Reviews.push(review);
       });
   }
 
   delete(review: Review): void {
-    this.game.Reviews = this.game.Reviews.filter(h => h !== review);
+    this.game.Reviews = this.game.Reviews.filter(r => r !== review);
     this.PACGamesService.deleteReview(review).subscribe();
   }
-
 }

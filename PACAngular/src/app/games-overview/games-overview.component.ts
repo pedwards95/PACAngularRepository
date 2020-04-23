@@ -55,6 +55,11 @@ export class GamesOverviewComponent implements OnInit
   }
 
   onSelect(selectedGame: Game): void {
+    if(this.selectedGame == selectedGame)
+    {
+      this.selectedGame = null;
+      return;
+    }
     this.selectedGame = selectedGame;
   }
 

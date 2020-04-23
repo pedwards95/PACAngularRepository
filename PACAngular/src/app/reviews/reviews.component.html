@@ -1,25 +1,32 @@
-<ul class = "heroes">
-    <ul class="heroes">
-        <li *ngFor="let review of game.Reviews">
-            <a routerLink="/reviewdetail/{{review.ReviewId}}">
-                <span class="badge">{{review.id}}</span> {{review.Username}} {{review.Rating}}
-            </a>
-            <button class="delete" title="delete review" (click)="delete(review)">x</button>
-        </li>
+<div *ngIf="game">
+    <ul class = "reviews">
+        <ul class="reviews" style='list-style-type:none;'>
+            <li *ngFor="let review of game.Reviews">
+                <button routerLink="/reviewdetail/{{review.ReviewId}}">
+                    <div>User: {{review.Username}}</div>
+                    <span>Rating: {{review.Rating}}</span>
+                </button>
+                <button class="delete" title="delete review" (click)="delete(review)">delete</button>
+            </li>
+        </ul>
     </ul>
-</ul>
 
-<div>
-<label>Add Review:
-    <label>
-        <input #reviewRating />
+    <br/>
+    <br/>
+    <div>
+    <label>Add Review:
+        <br/>
+        <div>
+            <label> Rating:
+                <input type=number #reviewRating />
+            </label>
+            <label> Review:
+                <input #reviewBody />
+            </label>
+        </div>
     </label>
-    <label>
-        <input #reviewBody />
-    </label>
-</label>
-<!-- (click) passes input value to add() and then clears the input -->
-<button (click)="add(reviewRating.value,reviewBody.value); reviewRating.value=''; reviewBody.value=''">
-  Add Review
-</button>
+    <button (click)="add(reviewRating.value,reviewBody.value); reviewRating.value=0; reviewBody.value=''">
+        Add Review
+    </button>
+    </div>
 </div>
