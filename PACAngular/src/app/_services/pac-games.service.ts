@@ -47,18 +47,26 @@ export class PACGamesService
       );
   }
 
-  addReview(UserId: number,  Username: string, GameId: number, GameName: string, Rating: number, ReviewBody: string) : Observable<Review>
+  getReviews() : Observable<Review[]>
   {
-    let review = new Review
-    {
-      review.ReviewId = 0,
-      review.UserId = UserId,
-      review.Username = Username,
-      review.GameId = GameId,
-      review.GameName = GameName,
-      review.Rating = Rating,
-      review.ReviewBody = ReviewBody
-    }
+    return this.http.get<Review[]>(`${this.baseUrl}api/reviews`)
+      .pipe(
+        catchError(this.handleError<Review[]>(`getReviews`))
+      );
+  }
+
+  addReview(review) : Observable<Review>
+  {
+    // let review = new Review
+    // {
+    //   review.ReviewId = 0,
+    //   review.UserId = UserId,
+    //   review.Username = Username,
+    //   review.GameId = GameId,
+    //   review.GameName = GameName,
+    //   review.Rating = Rating,
+    //   review.ReviewBody = ReviewBody
+    // }
     return this.http.post<Review>(`${this.baseUrl}api/reviews`, review, this.httpOptions)
       .pipe(
         catchError(this.handleError<Review>(`addReview`))
@@ -67,8 +75,6 @@ export class PACGamesService
 
   deleteReview(review : Review) : Observable<Review>
   {
-    console.log("deleting 2");
-    console.log(review);
     return this.http.delete<Review>(`${this.baseUrl}api/reviews/${review.ReviewId}`)
       .pipe(
         catchError(this.handleError<Review>(`deleteReview`,review))
