@@ -1,6 +1,6 @@
 import { catchError, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 import { User, Game, Review } from '../models';
@@ -17,6 +17,11 @@ export class PACGamesService
   get defaultUserId() { return 0; }
 
   constructor(private http: HttpClient) { }
+
+  httpOptions =
+  {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
+  };
 
   getUsers() : Observable<User[]>
   {
@@ -42,24 +47,29 @@ export class PACGamesService
       );
   }
 
-  addReview(userId: number, username: string, gameId: number, gameName: string, rating: number, reviewBody: string) : Observable<Review>
+  addReview(UserId: number,  Username: string, GameId: number, GameName: string, Rating: number, ReviewBody: string) : Observable<Review>
   {
-    let review: Review;
-    review.UserId = userId;
-    review.Username = username;
-    review.GameId = gameId;
-    review.GameName = gameName;
-    review.Rating = rating;
-    review.ReviewBody = reviewBody;
-    return this.http.post<Review>(`${this.baseUrl}api/reviews/`, review)
+    let review = new Review
+    {
+      review.ReviewId = 0,
+      review.UserId = UserId,
+      review.Username = Username,
+      review.GameId = GameId,
+      review.GameName = GameName,
+      review.Rating = Rating,
+      review.ReviewBody = ReviewBody
+    }
+    return this.http.post<Review>(`${this.baseUrl}api/reviews`, review, this.httpOptions)
       .pipe(
-        catchError(this.handleError<Review>(`getReview`))
+        catchError(this.handleError<Review>(`addReview`))
       );
   }
 
   deleteReview(review : Review) : Observable<Review>
   {
-    return this.http.get<Review>(`${this.baseUrl}api/reviews/${review.ReviewId}`)
+    console.log("deleting 2");
+    console.log(review);
+    return this.http.delete<Review>(`${this.baseUrl}api/reviews/${review.ReviewId}`)
       .pipe(
         catchError(this.handleError<Review>(`deleteReview`,review))
       );
