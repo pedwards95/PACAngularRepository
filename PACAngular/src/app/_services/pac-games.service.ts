@@ -41,7 +41,7 @@ export class PACGamesService
 
   updateUser(user: User): Observable<any>
   {
-    return this.http.put(`${this.baseUrl}api/users${user.UserId}`, user, this.httpOptions).pipe(
+    return this.http.put(`${this.baseUrl}api/users/${user.UserId}`, user, this.httpOptions).pipe(
       catchError(this.handleError<Review>('updateUser'))
     );
   }

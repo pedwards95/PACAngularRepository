@@ -15,6 +15,7 @@ export class UserDetailComponent implements OnInit
   @Input() user: User;
   currentUser : any;
   invaliduser : number;
+  activateMessage : string;
 
   constructor
   (
@@ -47,7 +48,7 @@ export class UserDetailComponent implements OnInit
       return;
     }
     this.PACGamesService.updateUser(this.user)
-      .subscribe(() => this.goBack());
+      .subscribe(() => this.activateMessage="Profile Updated!");
   }
 
   goBack(): void

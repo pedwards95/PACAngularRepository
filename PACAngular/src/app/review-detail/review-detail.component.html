@@ -13,7 +13,7 @@
         </label>
       </div>
   </div>
-  <div *ngIf="activateMessage">{{activateMessage}}</div>
+  <div><span *ngIf="activateMessage" style="border-style:solid; background-color: forestgreen;">{{activateMessage}}</span></div>
   <button (click)="save()">save</button>
   <button (click)="goBack()">Go Back</button>
 </div>

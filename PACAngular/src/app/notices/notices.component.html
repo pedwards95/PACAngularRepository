@@ -13,7 +13,7 @@
                             <td colspan="1">{{notice.Description}}</td>
                         </tr>
                         <tr>
-                            <td colspan="1">{{notice.Time}}</td>
+                            <td colspan="1">{{formatDate(notice.Time)}}</td>
                         </tr>
                     </div>
                 </div>
@@ -22,8 +22,8 @@
     </div>
     <div class="row-fluid">
         <form [formGroup]="messageForm" (ngSubmit)="save()" [routerLink]="''">
-            <input type="text" name="message" placeholder="Message" formControlName="Description"/>
-            <button type="submit" class="btn btn-primary" [disabled]="loading">SEND</button>
+            <input id="descripSubmit" type="text" name="message" placeholder="Message" formControlName="Description"/>
+            <button type="submit" class="btn btn-primary" [disabled]="loading" onclick="document.getElementById('descripSubmit').value = ''; document.getElementById('descripSubmit').focus();">SEND</button>
         </form>
     </div>
 </div>

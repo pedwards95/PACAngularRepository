@@ -14,13 +14,14 @@
           </label>
           <br/>
           <label>About You:
-            <input [(ngModel)]="user.Description" placeholder="Description"/>
+            <textarea [(ngModel)]="user.Description" placeholder="Description" style="padding-top: 2px; padding-bottom: 2px; max-width:500px; min-width:300px; word-wrap:normal; min-height: 5em; max-height: 50vh;"></textarea>
           </label>
           <br/>
           <label>Admin:
             <span>{{user.Admin}}</span>
           </label>
         </div>
+    <div><span *ngIf="activateMessage" style="border-style:solid; background-color: forestgreen;">{{activateMessage}}</span></div>
     <button (click)="save()">save</button>
     <button (click)="goBack()">Go Back</button>
 </div>

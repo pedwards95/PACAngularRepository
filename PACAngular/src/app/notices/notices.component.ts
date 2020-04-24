@@ -58,7 +58,7 @@ export class NoticesComponent implements OnInit
     this.PACGamesService.addNotice(myMessage)
       .subscribe(notice => {
         notice.Description = myMessage.Description,
-        notice.Time = new Date(),
+        notice.Time = new Date().toLocaleString() as any,
         this.notices.push(notice),
         this.checkNoticeLength()
       })
@@ -70,6 +70,27 @@ export class NoticesComponent implements OnInit
     {
       this.notices = this.notices.slice(Math.max(this.notices.length - 5, 0));
     }
+  }
+
+  //date formatter from stack overflow, solver JSON formatter difference with typescript (An Nguyen)
+  _formatDatetime(date: Date, format: string)
+  {
+    const _padStart = (value: number): string => value.toString().padStart(2, '0');
+    return format
+      .replace(/yyyy/g, _padStart(date.getFullYear()))
+      .replace(/dd/g, _padStart(date.getDate()))
+      .replace(/mm/g, _padStart(date.getMonth() + 1))
+      .replace(/hh/g, _padStart(date.getHours()))
+      .replace(/ii/g, _padStart(date.getMinutes()))
+      .replace(/ss/g, _padStart(date.getSeconds()));
+  }
+  isValidDate(d: Date): boolean
+  {
+      return !isNaN(d.getTime());
+  }
+  formatDate(date: any): string {
+      var datetime = new Date(date);
+      return this.isValidDate(datetime) ? this._formatDatetime(datetime, 'yyyy-mm-dd hh:ii:ss') : '';
   }
 
 }
