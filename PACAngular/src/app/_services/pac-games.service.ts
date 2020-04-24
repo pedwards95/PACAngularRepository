@@ -100,6 +100,16 @@ export class PACGamesService
       );;
   }
 
+  searchUsers(term: string): Observable<User[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<User[]>(`${this.baseUrl}api/users?search=${term}`).pipe(
+      catchError(this.handleError<User[]>('searchUsers', []))
+    );
+  }
+
   register(user: User) {
     return this.http.post(`${this.baseUrl}api/users`, user)
       .pipe(

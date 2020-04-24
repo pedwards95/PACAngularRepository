@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { User } from '../models';
 import { PACGamesService, AuthenticationService } from '../_services';
@@ -14,9 +16,12 @@ import { PACGamesService, AuthenticationService } from '../_services';
 
 export class UsersComponent implements OnInit
 {
+  searching : number = 0;
   currentUser : User;
+  users$: Observable<User[]>;
   users: User[];
   error: string | undefined;
+  private searchTerms = new Subject<string>();
 
   createUserForm = this.formBuilder.group(
     {
@@ -38,13 +43,24 @@ export class UsersComponent implements OnInit
 
   ngOnInit(): void
   {
-    this.getAll()
+    this.getAll();
+    this.users$ = this.searchTerms.pipe(
+      // wait 300ms after each keystroke before considering the term
+      debounceTime(300),
+
+      // ignore new term if same as previous term
+      distinctUntilChanged(),
+
+      // switch to new search observable each time the term changes
+      switchMap((term: string) => this.PACGamesService.searchUsers(term)),
+    );
   }
 
   getAll()
   {
+    this.searching = 0;
+    this.searchTerms = new Subject<string>()
     this.PACGamesService.getUsers()
-      //.pipe(first())
       .subscribe(users => {this.users = users});
   }
 
@@ -52,6 +68,12 @@ export class UsersComponent implements OnInit
     this.PACGamesService.delete(id)
         .pipe(first())
         .subscribe(() => this.getAll());
+  }
+
+  search(searchUser: string): void {
+    this.searching = 1;
+    this.users = undefined;
+    this.searchTerms.next(searchUser);
   }
 
   handleError(error: HttpErrorResponse)

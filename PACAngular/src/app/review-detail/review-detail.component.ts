@@ -18,6 +18,7 @@ export class ReviewDetailComponent implements OnInit
   @Input() review: Review;
   invaliduser : number;
   currentUser : any;
+  activateMessage : string;
 
   constructor(
     private router: Router,
@@ -50,7 +51,7 @@ export class ReviewDetailComponent implements OnInit
       return;
     }
     this.PACGamesService.updateReview(this.review)
-      .subscribe(() => this.goBack());
+      .subscribe(() => this.activateMessage="Review Updated!")
   }
 
   goBack(): void

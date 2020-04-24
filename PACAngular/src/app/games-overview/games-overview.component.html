@@ -1,11 +1,11 @@
-<button (click)="getAll()">Refresh</button>
+<span style="padding-left: 5%;"><button (click)="getAll()">Refresh</button></span>
 <div *ngIf="games">
   <ol>
     <ul *ngFor="let game of games">
-      <div [class.selected]="game === selectedGame" (click)="onSelect(game)">
-        <h3>{{game.GameName}}</h3>
+      <div [class.selected]="game === selectedGame" (click)="onSelect(game)" style="border-style:solid; padding-left:10px; padding-right:10px; width:40%; background-color:peachpuff">
+        <div style="border-style:solid; padding-bottom:2px; text-align: center; background-color:blanchedalmond; font-size:170%; font-weight:800;">     {{game.GameName}}      </div>
         <br/>
-        {{game.GameDescription}}
+        <span style="font-size:110%; font-weight:500;">{{game.GameDescription}}</span>
         <br/>
       </div>
         High Score: <span>{{game.HighScore}}</span> ll <span> Average Rating: </span> {{game.AverageReview}}

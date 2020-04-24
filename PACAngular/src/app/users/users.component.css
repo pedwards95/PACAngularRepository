@@ -1,0 +1,9 @@
+.active-pink-2 input[type=search]:focus:not {
+    border-bottom: 1px solid #522e3a;
+    box-shadow: 0 1px 0 0 #f48fb1;
+    }
+
+    .active-pink input[type=search] {
+    border-bottom: 1px solid #2e1b21;
+    box-shadow: 0 1px 0 0 #f48fb1;
+    }

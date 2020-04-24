@@ -1,3 +1,10 @@
+<form>
+  <div class="md-form active-pink active-pink-2 mb-3">
+    <label for="search1" style="padding-right:4px; padding-top:6px;">Search Users</label>
+    <input class="form-control" placeholder="search" type="text" id="search1" aria-label="Search" #searchUser (input)="search(searchUser.value)">
+  </div>
+</form>
+
 <button (click)="getAll()">Refresh</button>
 <div *ngIf="users">
   <ol>
@@ -6,4 +13,13 @@
         <a class="nav-item nav-link" routerLink="profile/{{user.userId}}">View Profile </a>
     </li>
   </ol>
+</div>
+
+<div *ngIf="users$">
+  <ul class="search-result">
+    <li *ngFor="let user of users$ | async" >
+      {{user.username}} ({{user.firstName}} {{user.lastName}})
+      <a class="nav-item nav-link" routerLink="profile/{{user.userId}}">View Profile </a>
+    </li>
+  </ul>
 </div>

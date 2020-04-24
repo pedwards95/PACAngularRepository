@@ -1,19 +1,19 @@
 <div *ngIf="review != null && invaliduser==0">
   <h3>Review</h3>
   <div>
-      <h4>{{review.Username}}'s Review</h4>
-      <h5>{{review.GameName}}</h5>
-      <br/>
-      <div>
+      <div style="padding-left: 1%; font-size: 120%; font-weight: 600;">{{review.Username}}'s Review</div>
+      <div style="padding-left: 1%; font-size: 120%; font-weight: 600;">{{review.GameName}}</div>
+      <div style="border-style:solid; background-color:darkgray;">
         <label>Rating:
-          <input [(ngModel)]="review.Rating" placeholder="Rating"/>
+          <input type="number" min="1" max="10" [(ngModel)]="review.Rating" placeholder="Rating" style="height:150%"/>
         </label>
         <br/>
         <label>Review:
-          <input [(ngModel)]="review.ReviewBody" placeholder="ReviewBody"/>
+          <textarea id="txt" class="form" onkeypress="this.style.height = ((this.value.height + 1) * 8) + 'px';" [(ngModel)]="review.ReviewBody" placeholder="ReviewBody" style="padding-top: 2px; padding-bottom: 2px; max-width:500px; min-width:300px; word-wrap:normal; min-height: 5em; max-height: 50vh;"></textarea>
         </label>
       </div>
   </div>
+  <div *ngIf="activateMessage">{{activateMessage}}</div>
   <button (click)="save()">save</button>
   <button (click)="goBack()">Go Back</button>
 </div>
@@ -21,16 +21,15 @@
 <div *ngIf="review != null && invaliduser==1">
   <h3>Review</h3>
   <div>
-      <h4>{{review.Username}}'s Review</h4>
-      <h5>{{review.GameName}}</h5>
-      <br/>
-      <div>
-        <label>Rating:
-          <div>{{review.Rating}} </div>
+    <div style="padding-left: 1%; font-size: 120%; font-weight: 600;">{{review.Username}}'s Review</div>
+    <div style="padding-left: 1%; font-size: 120%; font-weight: 600;">{{review.GameName}}</div>
+      <div style="border-style:solid; background-color:darkgray; padding:5px;">
+        <label style="padding-left: 10px;">Rating:
+          <span style="height:150%;">{{review.Rating}} </span>
         </label>
         <br/>
-        <label>Review:
-          <div>{{review.ReviewBody}} </div>
+        <label style="padding-left: 10px;">Review:
+          <div style="padding-top: 2px; padding-left: 10px; padding-bottom: 2px; max-width:800px; width:800px; word-wrap:normal; min-height: 2em; max-height: 50vh; background-color:rgb(221, 216, 216);">{{review.ReviewBody}} </div>
         </label>
       </div>
   </div>

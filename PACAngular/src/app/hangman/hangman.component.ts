@@ -41,23 +41,13 @@ export class HangmanComponent implements OnInit {
       .subscribe(gamedata => this.gamedata = gamedata);
   }
 
-  //add enter listener for enter input (need query selector for htmlelement specifically, as opposed to htmlinputelement, which addeventlistener can't use)
-  // answer = document.querySelector('.answer');
-  // answer.addEventListener('keyup', function(e) {
-  //   // keyCode 13 is enter/return
-  //   if (e.keyCode === 13) {
-  //       // upon enter, validate function called
-  //       this.validate();
-  //   }
-  // });
-  
   //function to validate user input
   validate(){
     //validation checks that userinput is a string with only letters and at least one character
     var reg =/^[0-9\!\@\#\$\%\^\*\_\|\<\>\{\}]+/;
     var guess = (document.getElementById('answer') as HTMLInputElement).value;
     //if input contains invalid num/symbol, will not run hangman
-    if(reg.test(guess)){              
+    if(reg.test(guess)){
       document.getElementById('result').innerHTML = "No numbers or symbols, please.";
     }
     else{
@@ -87,12 +77,11 @@ export class HangmanComponent implements OnInit {
     else{
       //add to count when user is wrong
       this.hangCount++;
-      console.log(this.hangCount);
       document.getElementById('result').innerHTML = "Wrong, add to hangman.";
 
       //get img to swap hangman pics & caption upon count (after getting img as htmlimageelement)
       (document.getElementById('hangmanpic') as HTMLImageElement).src = "../../assets/hangmanpics/hangman"+this.hangCount+".png";
-      
+
       var caption = document.getElementById('hangmancaption');
       //iterate through hangman caption cases
       switch(this.hangCount){
